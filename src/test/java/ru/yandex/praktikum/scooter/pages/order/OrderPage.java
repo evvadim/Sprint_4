@@ -1,0 +1,177 @@
+package ru.yandex.praktikum.scooter.pages.order;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
+
+public class OrderPage {
+
+    private final WebDriver driver;
+
+    // локаторы
+    // поле имя
+    private final By inputFirstNameField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Имя')]");
+
+    // поле фамилия
+    private final By inputLastNameField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Фамилия')]");
+
+    // поле адрес
+    private final By inputAddressField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Адрес')]");
+
+    // поле метро
+    private final By inputMetroField = By.className("select-search");
+
+    // поле телефон
+    private final By inputPhoneNumberField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Телефон')]");
+
+    // кнопка Далее на первом экране формы (переход к следующему экрану)
+    private final By buttonNextStepField = By.xpath(".//div[@class='Order_NextButton__1_rCA']/button[text()='Далее']");
+
+    // дата
+    private final By inputDateField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Когда')]");
+    private final By selectedDate = By.className("react-datepicker__day--selected");
+
+    // срок
+    private final By rentalDurationField = By.className("Dropdown-root");
+
+    // цвет
+    private final By scooterColorCheckboxGroup = By.className("Order_Checkboxes__3lWSI");
+
+    // комментарий курьеру
+    private final By inputCommentField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Комментарий')]");
+
+    // кнопка Заказать под формой ввода
+    private final By orderButtonUnderForm = By.xpath(".//div[@Class='Order_Buttons__1xGrp']/button[text()='Заказать']");
+
+    // копка Да подтверждения заказа
+    private final By confirmOrderButton = By.xpath(".//button[contains(@class,'Button_Button__ra12g')][text()='Да']");
+
+    // текст «Заказ оформлен» в случае удачного сценария заказа
+    private final By orderConfirmationText = By.xpath(".//div[text()='Заказ оформлен']");
+
+
+    public OrderPage(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    private void fillInputForText(By locator, String inputText) {
+
+        WebElement input = driver.findElement(locator);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", input);
+
+        input.sendKeys(inputText);
+
+    }
+
+    // два способа заполнить поле станция метро
+
+    // 1-й способ: выбор станции двумя кликами
+    // первым кликом раскрываем список, скроллим до нужной станции и кликаем по ней
+    private void selectMetroStationByTwoClicks(String metroStation) {
+
+        WebElement field = driver.findElement(inputMetroField);
+
+        // прокручиваем страницу до поля станции метро и кликаем по ней
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", field);
+        field.click();
+
+        // ищем станцию в списке (в коде), скроллим список до неё и кликаем
+        WebElement station = field.findElement(By.xpath(String.format(".//div[contains(@class,'select-search__select')]//li[@class='select-search__row']//div[text()='%s']", metroStation)));
+        station.click();
+    }
+
+    // 2-й способ: частичный ввод названия и клик в списке
+    // вводим несколько символов в поле, кликаем по первому пункту из отфильтрованных названий станций, предполагая, что подсказка соответствует запросу
+    private void selectMetroStationByPartialInputAndClick(String metroStation) {
+
+        WebElement field = driver.findElement(inputMetroField);
+
+        field.findElement(By.xpath(".//input[@class='select-search__input']")).sendKeys(metroStation);
+        field.findElement(By.xpath(".//li[1]")).click();
+
+
+    }
+
+
+    public void fillFirstName(String inputText) {
+        fillInputForText(inputFirstNameField, inputText);
+    }
+
+    public void fillLastName(String inputText) {
+        fillInputForText(inputLastNameField, inputText);
+    }
+
+    public void fillAddress(String inputText) {
+        fillInputForText(inputAddressField, inputText);
+    }
+
+    public void selectMetroStation(String station) {
+//        selectMetroStationByTwoClicks(station);
+        selectMetroStationByPartialInputAndClick(station);
+    }
+
+    public void fillPhoneNumber(String inputText) {
+        fillInputForText(inputPhoneNumberField, inputText);
+    }
+
+    public void clickNextButton() {
+        WebElement button = driver.findElement(buttonNextStepField);
+        button.click();
+    }
+
+    public void fillDate(String date) {
+
+        // вводим значение даты в виде строки
+        fillInputForText(inputDateField, date);
+
+        // для подтверждения ввода и закрития окна календаря кликаем в выбранную дату
+        WebElement selectedDateCalendar = driver.findElement(selectedDate);
+        selectedDateCalendar.click();
+
+    }
+
+    public void fillDuration(int duration) {
+
+        // раскрываем выпадающее меню
+        WebElement durationField = driver.findElement(rentalDurationField);
+        durationField.click();
+
+        // кликаем по требуемому элементу списка
+        WebElement durationMenuItem = driver.findElement(By.xpath(String.format(".//div[@class='Dropdown-menu']/*[%d]", duration)));
+        durationMenuItem.click();
+
+    }
+
+    public void selectScooterColor(String color) {
+        WebElement checkboxGroup = driver.findElement(scooterColorCheckboxGroup);
+        checkboxGroup.findElement(By.xpath(String.format(".//label[contains(text(),'%s')]/input", color))).click();
+    }
+
+    public void addCommentForCourier(String message) {
+
+        if (!message.isEmpty()) {
+            WebElement commentField = driver.findElement(inputCommentField);
+            commentField.sendKeys(message);
+        }
+
+    }
+
+    public void clickOrderButtonUnderForm() {
+        WebElement button = driver.findElement(orderButtonUnderForm);
+        button.click();
+    }
+
+    public void clickConfirmOrderButton() {
+        WebElement button = driver.findElement(confirmOrderButton);
+        button.click();
+    }
+
+    public boolean orderConfirmedTextDisplayed() {
+        List<WebElement> modal = driver.findElements(orderConfirmationText);
+        return !modal.isEmpty();
+    }
+
+}
