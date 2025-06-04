@@ -33,7 +33,8 @@ public class TestMakeNewOrder {
 
 
     public TestMakeNewOrder(String setBrowser, String firstName, String lastName, String address, String metro, String phone, String date, int duration, String color, String comment) {
-        this.setBrowser = setBrowser;
+        this.setBrowser = setBrowser;   // не знаю насколько правильно было выбирать браузер для тестирования через свитч
+                                        // сделал как смог
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -50,7 +51,7 @@ public class TestMakeNewOrder {
     public static Object[][] getOrderData() {
         return new Object[][] {
                 {"ff", "Василий", "Самокатов", "Газетный пер., 17", "смол", "79876556789", "21.09.2024", 2, "серая", ""},
-                {"chr", "Ли", "Васильев", "Мытная ул., 31", "преобр", "79001116789", "1.09.2024", 2, "жемчуг", ""},
+                {"chr", "Ли", "Васильев", "Мытная ул., 31", "преобр", "79001116789", "1.09.2024", 2, "жемчуг", "очень надо"},
                 {"ff", "Джон", "Петров", "Историческая площадь, 1", "тага", "79001116789", "1.03.2025", 5, "чёрный", ""},
         };
     }
@@ -72,16 +73,14 @@ public class TestMakeNewOrder {
     public void startUp() {
 
         switch (setBrowser) {
-
             case "ff":
                 WebDriverManager.firefoxdriver().setup();
                 break;
-
             case "chr":
                 WebDriverManager.chromedriver().setup();
                 break;
-
         }
+
     }
 
     @Test
@@ -99,9 +98,9 @@ public class TestMakeNewOrder {
 
     }
 
-//    @After
-//    public void tearDown() {
-//        driver.quit();
-//    }
+    @After
+    public void tearDown() {
+        driver.quit();
+    }
 
 }
