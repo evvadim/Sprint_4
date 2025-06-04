@@ -1,6 +1,7 @@
 package ru.yandex.praktikum.scooter.tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,8 +21,6 @@ public class TestMakeNewOrder {
     private final String firstName;
     private final String lastName;
 
-
-    private WebDriver driver;
 
     public TestMakeNewOrder(String setBrowser, String firstName, String lastName) {
         this.setBrowser = setBrowser;
@@ -69,7 +68,8 @@ public class TestMakeNewOrder {
     @Test
     public void fillInput() {
 
-        driver = prepareBrower();
+        WebDriver driver = prepareBrower();
+        Assert.assertNotNull(driver);
         driver.get("https://qa-scooter.praktikum-services.ru/order");
 
         OrderPage orderPage = new OrderPage(driver);
