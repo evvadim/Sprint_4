@@ -174,4 +174,19 @@ public class OrderPage {
         return !modal.isEmpty();
     }
 
+    public void makeNewOrder(String firstName, String lastName, String address, String metro, String phone, String date, int duration, String color, String comment) {
+        fillFirstName(firstName);
+        fillLastName(lastName);
+        fillAddress(address);
+        selectMetroStation(metro);
+        fillPhoneNumber(phone);
+        clickNextButton();
+        fillDate(date);
+        fillDuration(duration);
+        selectScooterColor(color);
+        addCommentForCourier(comment);
+        clickOrderButtonUnderForm();
+        clickConfirmOrderButton();
+    }
+
 }

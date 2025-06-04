@@ -54,18 +54,7 @@ public class TestMakeNewOrder {
 
         OrderPage orderPage = new OrderPage(driver);
 
-        orderPage.fillFirstName("Гарри");
-        orderPage.fillLastName("Поттер");
-        orderPage.fillAddress("Набережная Обычная, 17");
-        orderPage.selectMetroStation("арба");
-        orderPage.fillPhoneNumber("79876543210");
-        orderPage.clickNextButton();
-        orderPage.fillDate("30.11.2024");
-        orderPage.fillDuration(7);
-        orderPage.selectScooterColor("чёрный");
-        orderPage.addCommentForCourier("привезите в полнолуние");
-        orderPage.clickOrderButtonUnderForm();
-        orderPage.clickConfirmOrderButton();
+        orderPage.makeNewOrder("Гарри", "Поттер", "Наклонная наб., 17", "арба", "79876543210", "24.09.2024", 7, "чёрный", "привезите заряженный самокат");
 
         assertTrue("Неуспешное оформление заказа, текст «Заказ оформлен» не найден",orderPage.orderConfirmedTextDisplayed());
 
