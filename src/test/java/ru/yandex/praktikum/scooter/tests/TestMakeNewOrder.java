@@ -1,6 +1,7 @@
 package ru.yandex.praktikum.scooter.tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,23 +17,41 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Parameterized.class)
 public class TestMakeNewOrder {
 
+    private WebDriver driver;
+
     // готовим переменные для параметризации
     private final String setBrowser;
     private final String firstName;
     private final String lastName;
+    private final String address;
+    private final String metro;
+    private final String phone;
+    private final String date;
+    private final int duration;
+    private final String color;
+    private final String comment;
 
 
-    public TestMakeNewOrder(String setBrowser, String firstName, String lastName) {
+    public TestMakeNewOrder(String setBrowser, String firstName, String lastName, String address, String metro, String phone, String date, int duration, String color, String comment) {
         this.setBrowser = setBrowser;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.address = address;
+        this.metro = metro;
+        this.phone = phone;
+        this.date = date;
+        this.duration = duration;
+        this.color = color;
+        this.comment = comment;
     }
 
+    // данные для тестирования
     @Parameterized.Parameters
     public static Object[][] getOrderData() {
         return new Object[][] {
-                {"ff", "Василий", "Самокатов"},
-                {"chr", "Самокат", "Васильев"},
+                {"ff", "Василий", "Самокатов", "Газетный пер., 17", "смол", "79876556789", "21.09.2024", 2, "серая", ""},
+                {"chr", "Ли", "Васильев", "Мытная ул., 31", "преобр", "79001116789", "1.09.2024", 2, "жемчуг", ""},
+                {"ff", "Джон", "Петров", "Историческая площадь, 1", "тага", "79001116789", "1.03.2025", 5, "чёрный", ""},
         };
     }
 
@@ -68,13 +87,13 @@ public class TestMakeNewOrder {
     @Test
     public void fillInput() {
 
-        WebDriver driver = prepareBrower();
+        driver = prepareBrower();
         Assert.assertNotNull(driver);
         driver.get("https://qa-scooter.praktikum-services.ru/order");
 
         OrderPage orderPage = new OrderPage(driver);
 
-        orderPage.makeNewOrder(firstName, lastName, "Наклонная наб., 17", "арба", "79876543210", "24.09.2024", 7, "чёрный", "привезите заряженный самокат");
+        orderPage.makeNewOrder(firstName, lastName, address, metro, phone, date, duration, color, comment);
 
         assertTrue("Неуспешное оформление заказа, текст «Заказ оформлен» не найден",orderPage.orderConfirmedTextDisplayed());
 
