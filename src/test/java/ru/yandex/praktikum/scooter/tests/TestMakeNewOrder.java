@@ -2,7 +2,6 @@ package ru.yandex.praktikum.scooter.tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.yandex.praktikum.scooter.pages.order.OrderPage;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
@@ -87,7 +87,7 @@ public class TestMakeNewOrder {
     public void fillInput() {
 
         driver = prepareBrower();
-        Assert.assertNotNull(driver);
+        assertNotNull(driver);
         driver.get("https://qa-scooter.praktikum-services.ru/order");
 
         OrderPage orderPage = new OrderPage(driver);
