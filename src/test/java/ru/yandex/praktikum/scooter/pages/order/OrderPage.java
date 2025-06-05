@@ -57,6 +57,7 @@ public class OrderPage {
         this.driver = driver;
     }
 
+    // вспомагательный метод заполнения текстовых полей
     private void fillInputForText(By locator, String inputText) {
 
         WebElement input = driver.findElement(locator);
@@ -169,7 +170,7 @@ public class OrderPage {
         button.click();
     }
 
-    public boolean orderConfirmedTextDisplayed() {
+    public boolean orderConfirmationTextDisplayed() {
         List<WebElement> modal = driver.findElements(orderConfirmationText);
         return !modal.isEmpty();
     }

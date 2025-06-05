@@ -32,9 +32,21 @@ public class TestMakeNewOrder {
     private final String comment;
 
 
-    public TestMakeNewOrder(String setBrowser, String firstName, String lastName, String address, String metro, String phone, String date, int duration, String color, String comment) {
-        this.setBrowser = setBrowser;   // не знаю насколько правильно было выбирать браузер для тестирования через свитч
-                                        // сделал как смог
+    public TestMakeNewOrder(String setBrowser,
+                            String firstName,
+                            String lastName,
+                            String address,
+                            String metro,
+                            String phone,
+                            String date,
+                            int duration,
+                            String color,
+                            String comment) {
+
+        // не знаю насколько правильно было выбирать браузер для тестирования через свитч
+        // сделал как смог
+        this.setBrowser = setBrowser;
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -94,7 +106,7 @@ public class TestMakeNewOrder {
 
         orderPage.makeNewOrder(firstName, lastName, address, metro, phone, date, duration, color, comment);
 
-        assertTrue("Неуспешное оформление заказа, текст «Заказ оформлен» не найден",orderPage.orderConfirmedTextDisplayed());
+        assertTrue("Неуспешное оформление заказа, текст «Заказ оформлен» не найден",orderPage.orderConfirmationTextDisplayed());
 
     }
 
