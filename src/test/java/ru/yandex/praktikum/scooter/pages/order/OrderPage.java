@@ -21,8 +21,21 @@ public class OrderPage {
     // поле адрес
     private final By inputAddressField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Адрес')]");
 
-    // поле метро
-    private final By inputMetroField = By.className("select-search");
+    // элемент выбор станции метро
+    private final By fieldMetro = By.className("select-search");
+
+    // локатор для 1-го способа выбора станции
+    // метод, возвращающий локатор элемента, текст которого совпадает с названием станции `station`
+    private By elementStation(String station) {
+        return By.xpath(String.format(".//div[contains(@class,'select-search__select')]//li[@class='select-search__row']//div[text()='%s']", station));
+    }
+
+    // локаторы для 2-го способа выбора станции
+    // поле ввода названия станции
+    private final By inputMetro = By.xpath(".//input[@class='select-search__input']");
+
+    // первый элемент списка станций метро
+    private final By firstElementOfList = By.xpath(".//li[1]");
 
     // поле телефон
     private final By inputPhoneNumberField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Телефон')]");
@@ -30,15 +43,25 @@ public class OrderPage {
     // кнопка Далее на первом экране формы (переход к следующему экрану)
     private final By buttonNextStepField = By.xpath(".//div[@class='Order_NextButton__1_rCA']/button[text()='Далее']");
 
-    // дата
+    // поле даты
     private final By inputDateField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Когда')]");
+
+    // выбранная дата в календаре
     private final By selectedDate = By.className("react-datepicker__day--selected");
 
-    // срок
+    // поле срок аренды
     private final By rentalDurationField = By.className("Dropdown-root");
 
-    // цвет
+    // элементы выпадающего списка срок аренды
+    private final By rentalDurationElement = By.xpath(".//div[@class='Dropdown-menu']");
+
+    // цвет самоката
     private final By scooterColorCheckboxGroup = By.className("Order_Checkboxes__3lWSI");
+
+    // локатор чекбокса, содержащего `text`
+    private By checkboxContainsText(String text) {
+        return By.xpath(String.format(".//label[contains(text(),'%s')]/input", text));
+    }
 
     // комментарий курьеру
     private final By inputCommentField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Комментарий')]");
@@ -73,25 +96,24 @@ public class OrderPage {
     // первым кликом раскрываем список, скроллим до нужной станции и кликаем по ней
     private void selectMetroStationByTwoClicks(String metroStation) {
 
-        WebElement field = driver.findElement(inputMetroField);
-
-        // прокручиваем страницу до поля станции метро и кликаем по ней
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", field);
+        WebElement field = driver.findElement(fieldMetro);
         field.click();
 
         // ищем станцию в списке (в коде), скроллим список до неё и кликаем
-        WebElement station = field.findElement(By.xpath(String.format(".//div[contains(@class,'select-search__select')]//li[@class='select-search__row']//div[text()='%s']", metroStation)));
+        WebElement station = field.findElement(elementStation(metroStation));
         station.click();
     }
 
     // 2-й способ: частичный ввод названия и клик в списке
-    // вводим несколько символов в поле, кликаем по первому пункту из отфильтрованных названий станций, предполагая, что подсказка соответствует запросу
+    // вводим несколько символов в поле, кликаем по первому пункту из отфильтрованных названий станций,
+    // предполагая, что подсказка соответствует запросу
+    // будем использовать его
     private void selectMetroStationByPartialInputAndClick(String metroStation) {
 
-        WebElement field = driver.findElement(inputMetroField);
+        WebElement field = driver.findElement(fieldMetro);
 
-        field.findElement(By.xpath(".//input[@class='select-search__input']")).sendKeys(metroStation);
-        field.findElement(By.xpath(".//li[1]")).click();
+        field.findElement(inputMetro).sendKeys(metroStation);
+        field.findElement(firstElementOfList).click();
 
 
     }
@@ -141,14 +163,14 @@ public class OrderPage {
         durationField.click();
 
         // кликаем по требуемому элементу списка
-        WebElement durationMenuItem = driver.findElement(By.xpath(String.format(".//div[@class='Dropdown-menu']/*[%d]", duration)));
+        WebElement durationMenuItem = durationField.findElement(rentalDurationElement).findElement(By.xpath(String.format("./*[%d]", duration)));
         durationMenuItem.click();
 
     }
 
     public void selectScooterColor(String color) {
         WebElement checkboxGroup = driver.findElement(scooterColorCheckboxGroup);
-        checkboxGroup.findElement(By.xpath(String.format(".//label[contains(text(),'%s')]/input", color))).click();
+        checkboxGroup.findElement(checkboxContainsText(color)).click();
     }
 
     public void addCommentForCourier(String message) {

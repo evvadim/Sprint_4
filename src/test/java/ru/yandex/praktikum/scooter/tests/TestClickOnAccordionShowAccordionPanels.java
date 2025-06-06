@@ -84,7 +84,7 @@ public class TestClickOnAccordionShowAccordionPanels {
 
         sectionImportantQuestions.clickAccordionItemNumber(index);
 
-        assertTrue(String.format("Панель эелемента номер %d не отображается", index), sectionImportantQuestions.accordionItemNumberIsDisplayed(index));
+        assertTrue(String.format("Панель элемента номер %d не отображается", index), sectionImportantQuestions.accordionItemNumberIsDisplayed(index));
         assertEquals(String.format("Текст элемента списка номер %d отличается от требований", index),
                 message, sectionImportantQuestions.getTextAccordionItemNumber(index));
     }

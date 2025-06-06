@@ -27,7 +27,7 @@ public class TestMakeNewOrder {
     private final String metro;
     private final String phone;
     private final String date;
-    private final int duration;
+    private final int    duration;
     private final String color;
     private final String comment;
 
@@ -39,7 +39,7 @@ public class TestMakeNewOrder {
                             String metro,
                             String phone,
                             String date,
-                            int duration,
+                            int    duration,
                             String color,
                             String comment) {
 

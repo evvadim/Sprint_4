@@ -16,6 +16,7 @@ public class SectionImportantQuestions {
     // локатор списка
     private final By accordionItemsList = By.className("accordion");
 
+    // локатор элемента списка
     private final By accordionText = By.xpath(".//div[@class='accordion__panel']");
 
     public SectionImportantQuestions(WebDriver driver) {
