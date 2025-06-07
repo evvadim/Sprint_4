@@ -18,9 +18,8 @@ public class OrderButtons {
     // переменная для текста кнопки
     private final String orderButtonText = "Заказать";
 
-    /**
-    * локаторы кнопок «Заказать»
-    */
+
+    // локаторы кнопок «Заказать»
     private final By buttonHeader = By.xpath(String.format(".//div[@class='Header_Nav__AGCXC']/button[text()='%s']", orderButtonText));
     private final By buttonRoadmap = By.xpath(String.format(".//div[@class='Home_FinishButton__1_cWm']/button[text()='%s']", orderButtonText));
 

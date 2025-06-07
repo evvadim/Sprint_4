@@ -9,7 +9,7 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import ru.yandex.praktikum.scooter.pages.order.OrderPage;
+import ru.yandex.praktikum.scooter.pages.order.Order;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -102,11 +102,11 @@ public class TestMakeNewOrder {
         assertNotNull(driver);
         driver.get("https://qa-scooter.praktikum-services.ru/order");
 
-        OrderPage orderPage = new OrderPage(driver);
+        Order order = new Order(driver);
 
-        orderPage.makeNewOrder(firstName, lastName, address, metro, phone, date, duration, color, comment);
+        order.makeNewOrder(firstName, lastName, address, metro, phone, date, duration, color, comment);
 
-        assertTrue("Неуспешное оформление заказа, текст «Заказ оформлен» не найден",orderPage.orderConfirmationTextDisplayed());
+        assertTrue("Неуспешное оформление заказа, текст «Заказ оформлен» не найден", order.orderConfirmationTextDisplayed());
 
     }
 

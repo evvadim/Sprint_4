@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class OrderPage {
+public class Order {
 
     private final WebDriver driver;
 
@@ -76,7 +76,7 @@ public class OrderPage {
     private final By orderConfirmationText = By.xpath(".//div[text()='Заказ оформлен']");
 
 
-    public OrderPage(WebDriver driver) {
+    public Order(WebDriver driver) {
         this.driver = driver;
     }
 
