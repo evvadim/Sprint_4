@@ -5,13 +5,14 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import ru.yandex.praktikum.scooter.pages.main.OrderButtons;
+import ru.yandex.praktikum.scooter.pages.main.MainPageButtonsOpenPage;
 
 
-public class TestOrderButtonsOpenPage {
+public class TestButtonOpenPage {
 
     private WebDriver driver;
     private String setBrowser = "chr";
@@ -49,26 +50,18 @@ public class TestOrderButtonsOpenPage {
     }
 
     @Test
-    public void clickOnOrderButtonHeader() {
+    public void clickButtonOpenPage() {
 
         driver = prepareBrower();
         driver.get("https://qa-scooter.praktikum-services.ru/");
 
-        OrderButtons orderButtons = new OrderButtons(driver);
-        orderButtons.clickOrderButtonHeaderOpen();
+        MainPageButtonsOpenPage mainPageButtonsOpenPage = new MainPageButtonsOpenPage(driver);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(mainPageButtonsOpenPage.buttonRoadmap));
+        String result = mainPageButtonsOpenPage.clickButtonOpenURL(mainPageButtonsOpenPage.buttonRoadmap);
+        System.out.println(result);
 
     }
 
-    @Test
-    public void clickOnOrderButtonRoadmap() {
-
-        driver = prepareBrower();
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-
-        OrderButtons orderButtons = new OrderButtons(driver);
-        orderButtons.clickOrderButtonRoadmapOpen();
-
-    }
 
     @After
     public void tearDown() {
