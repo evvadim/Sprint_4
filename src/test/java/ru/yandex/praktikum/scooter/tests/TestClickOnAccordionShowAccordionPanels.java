@@ -78,7 +78,7 @@ public class TestClickOnAccordionShowAccordionPanels {
 
         driver = prepareBrower();
         assertNotNull(driver);
-        driver.get("https://qa-scooter.praktikum-services.ru/");
+        driver.get("https://qa-scooter.praktikum-services.ru");
 
         SectionImportantQuestions sectionImportantQuestions = new SectionImportantQuestions(driver);
 
