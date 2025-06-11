@@ -46,7 +46,7 @@ public class TestClickOnAccordionShowAccordionPanels {
         };
     }
 
-    private WebDriver prepareBrower() {
+    private WebDriver prepareBrowser() {
 
         switch (setBrowser) {
             case "ff":
@@ -76,7 +76,7 @@ public class TestClickOnAccordionShowAccordionPanels {
     @Test
     public void TestClickOnAccordion() {
 
-        driver = prepareBrower();
+        driver = prepareBrowser();
         assertNotNull(driver);
         driver.get("https://qa-scooter.praktikum-services.ru");
 

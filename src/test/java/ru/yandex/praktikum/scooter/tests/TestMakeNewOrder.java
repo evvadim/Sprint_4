@@ -34,7 +34,7 @@ public class TestMakeNewOrder {
 
 
     public TestMakeNewOrder(String setBrowser,
-                            int    orderButtonNumber,
+                            int    orderButtonNumber, // номер кнопки «заказать»
                             String firstName,
                             String lastName,
                             String address,
@@ -65,12 +65,12 @@ public class TestMakeNewOrder {
     public static Object[][] getOrderData() {
         return new Object[][] {
                 {"chr", 0, "Василий", "Самокатов", "Газетный пер., 17", "смол", "79876556789", "21.09.2024", 2, "серая", ""},
-//                {"chr", 1, "Ли", "Васильев", "Мытная ул., 31", "преобр", "79001116789", "1.09.2024", 2, "жемчуг", "очень надо"},
-//                {"chr", 0, "Джон", "Петров", "Историческая площадь, 1", "тага", "79001116789", "1.03.2025", 5, "чёрный", ""},
+                {"chr", 1, "Ли", "Васильев", "Мытная ул., 31", "преобр", "79001116789", "1.09.2024", 2, "жемчуг", "очень надо"},
+                {"chr", 0, "Джон", "Петров", "Историческая площадь, 1", "тага", "79001116789", "1.03.2025", 5, "чёрный", ""},
         };
     }
 
-    private WebDriver prepareBrower() {
+    private WebDriver prepareBrowser() {
 
         switch (setBrowser) {
             case "ff":
@@ -100,7 +100,7 @@ public class TestMakeNewOrder {
     @Test
     public void MakeNewOrderFullFlow() {
 
-        driver = prepareBrower();
+        driver = prepareBrowser();
         assertNotNull(driver);
         driver.get("https://qa-scooter.praktikum-services.ru");
         String startURL = driver.getCurrentUrl();
