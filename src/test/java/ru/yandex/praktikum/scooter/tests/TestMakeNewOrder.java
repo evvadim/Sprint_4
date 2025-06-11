@@ -1,14 +1,12 @@
 package ru.yandex.praktikum.scooter.tests;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import ru.yandex.praktikum.scooter.browser.BrowserDriverSetup;
 import ru.yandex.praktikum.scooter.pages.main.MainPage;
 import ru.yandex.praktikum.scooter.pages.order.Order;
 
@@ -20,7 +18,7 @@ public class TestMakeNewOrder {
     private WebDriver driver;
 
     // готовим переменные для параметризации
-    private final String setBrowser;
+    private final String runUsingDriver;
     private final int    orderButtonNumber;
     private final String firstName;
     private final String lastName;
@@ -33,7 +31,7 @@ public class TestMakeNewOrder {
     private final String comment;
 
 
-    public TestMakeNewOrder(String setBrowser,
+    public TestMakeNewOrder(String runUsingDriver,
                             int    orderButtonNumber, // номер кнопки «заказать»
                             String firstName,
                             String lastName,
@@ -47,7 +45,7 @@ public class TestMakeNewOrder {
 
         // не знаю насколько правильно было выбирать браузер для тестирования через свитч
         // сделал как смог
-        this.setBrowser = setBrowser;
+        this.runUsingDriver = runUsingDriver;
         this.orderButtonNumber = orderButtonNumber;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -64,44 +62,25 @@ public class TestMakeNewOrder {
     @Parameterized.Parameters
     public static Object[][] getOrderData() {
         return new Object[][] {
-                {"chr", 0, "Василий", "Самокатов", "Газетный пер., 17", "смол", "79876556789", "21.09.2024", 2, "серая", ""},
-                {"chr", 1, "Ли", "Васильев", "Мытная ул., 31", "преобр", "79001116789", "1.09.2024", 2, "жемчуг", "очень надо"},
-                {"chr", 0, "Джон", "Петров", "Историческая площадь, 1", "тага", "79001116789", "1.03.2025", 5, "чёрный", ""},
+                {BrowserDriverSetup.CHROME, 0, "Василий", "Самокатов", "Газетный пер., 17", "смол", "79876556789", "21.09.2024", 2, "серая", ""},
+                {BrowserDriverSetup.CHROME, 1, "Ли", "Васильев", "Мытная ул., 31", "преобр", "79001116789", "1.09.2024", 2, "жемчуг", "очень надо"},
+                {BrowserDriverSetup.CHROME, 0, "Джон", "Петров", "Историческая площадь, 1", "тага", "79001116789", "1.03.2025", 5, "чёрный", ""},
         };
-    }
-
-    private WebDriver prepareBrowser() {
-
-        switch (setBrowser) {
-            case "ff":
-                return new FirefoxDriver();
-            case "chr":
-                return new ChromeDriver();
-            default:
-                return null;
-        }
-
     }
 
     @Before
     public void startUp() {
 
-        switch (setBrowser) {
-            case "ff":
-                WebDriverManager.firefoxdriver().setup();
-                break;
-            case "chr":
-                WebDriverManager.chromedriver().setup();
-                break;
-        }
+        BrowserDriverSetup browserDriverSetup = new BrowserDriverSetup(runUsingDriver);
+        browserDriverSetup.driverManagerSetup();
+        driver = browserDriverSetup.getNewDriver();
+        assertNotNull(driver);
 
     }
 
     @Test
     public void MakeNewOrderFullFlow() {
 
-        driver = prepareBrowser();
-        assertNotNull(driver);
         driver.get("https://qa-scooter.praktikum-services.ru");
         String startURL = driver.getCurrentUrl();
 
