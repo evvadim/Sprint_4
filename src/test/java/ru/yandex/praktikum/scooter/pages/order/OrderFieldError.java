@@ -1,11 +1,9 @@
 package ru.yandex.praktikum.scooter.pages.order;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 public class OrderFieldError {
 
-    private final WebDriver driver;
 
     // локаторы ошибок будем указывать через родителей локаторов полей ввода
     // вспомагательный локатор
@@ -30,10 +28,6 @@ public class OrderFieldError {
 //    private final By inputDateFieldError
 //    private final By rentalDurationError
 
-
-    public OrderFieldError(WebDriver driver) {
-        this.driver = driver;
-    }
 
     // геттеры локаторов
     public static By getInputFirstNameFieldError() {

@@ -12,6 +12,8 @@ import ru.yandex.praktikum.scooter.browser.BrowserDriverSetup;
 import ru.yandex.praktikum.scooter.pages.order.Order;
 import ru.yandex.praktikum.scooter.pages.order.OrderFieldError;
 
+import java.util.Objects;
+
 import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
@@ -39,11 +41,11 @@ public class TestErrorMessagesWhenFieldIsEmpty {
     @Parameterized.Parameters
     public static Object[][] getErrorMessages() {
         return new Object[][] {
-                {BrowserDriverSetup.FIREFOX, Order.getInputFirstNameField(), OrderFieldError.getInputFirstNameFieldError(), "Введите корректное имя"},
-                {BrowserDriverSetup.FIREFOX, Order.getInputLastNameField(), OrderFieldError.getInputLastNameFieldError(), "Введите корректную фамилию"},
-                {BrowserDriverSetup.FIREFOX, Order.getInputAddressField(), OrderFieldError.getInputAddressFieldError(), "Введите корректный адрес"},
-                {BrowserDriverSetup.FIREFOX, Order.getInputMetroField(), OrderFieldError.getInputMetroFieldError(), "Выберите станцию"},
-                {BrowserDriverSetup.FIREFOX, Order.getInputPhoneNumberField(), OrderFieldError.getInputPhoneNumberFieldError() , "Введите корректный номер"},
+                {BrowserDriverSetup.CHROME, Order.getInputFirstNameField(), OrderFieldError.getInputFirstNameFieldError(), "Введите корректное имя"},
+                {BrowserDriverSetup.CHROME, Order.getInputLastNameField(), OrderFieldError.getInputLastNameFieldError(), "Введите корректную фамилию"},
+                {BrowserDriverSetup.CHROME, Order.getInputAddressField(), OrderFieldError.getInputAddressFieldError(), "Введите корректный адрес"},
+                {BrowserDriverSetup.CHROME, Order.getInputMetroField(), OrderFieldError.getInputMetroFieldError(), "Выберите станцию"},
+                {BrowserDriverSetup.CHROME, Order.getInputPhoneNumberField(), OrderFieldError.getInputPhoneNumberFieldError() , "Введите корректный номер"},
         };
     }
 
@@ -66,7 +68,7 @@ public class TestErrorMessagesWhenFieldIsEmpty {
 
         WebElement inputField = driver.findElement(inputFieldLocator);
         WebElement inputFieldError = inputField.findElement(inputFieldErrorLocator);
-        assertTrue(String.format("При пустом поле ввода '%s' текст ошибки '%s' не отображается", inputField.getAttribute("placeholder").substring(2), errorMessage), inputFieldError.isDisplayed());
+        assertTrue(String.format("При пустом поле ввода '%s' текст ошибки '%s' не отображается", Objects.requireNonNull(inputField.getAttribute("placeholder")).substring(2), errorMessage), inputFieldError.isDisplayed());
         assertEquals("Объект с текстом ошибки отображается, но текст не соответствует требованиям", errorMessage, inputFieldError.getText());
 
     }

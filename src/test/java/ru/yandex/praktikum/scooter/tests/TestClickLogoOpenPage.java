@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 public class TestClickLogoOpenPage {
 
     private WebDriver driver;
-    private final String runUsingDriver = BrowserDriverSetup.FIREFOX;
+    private final String runUsingDriver = BrowserDriverSetup.CHROME;
 
     @Before
     public void startUp() {
