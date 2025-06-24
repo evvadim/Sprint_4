@@ -67,7 +67,7 @@ public class TestErrorMessagesWhenFieldIsEmpty {
         WebElement inputField = driver.findElement(inputFieldLocator);
         WebElement inputFieldError = inputField.findElement(inputFieldErrorLocator);
         assertTrue(String.format("При пустом поле ввода '%s' текст ошибки '%s' не отображается", inputField.getAttribute("placeholder").substring(2), errorMessage), inputFieldError.isDisplayed());
-        assertEquals("Объект ошибки отображается, но текст не соответствует требованиям", errorMessage, inputFieldError.getText());
+        assertEquals("Объект с текстом ошибки отображается, но текст не соответствует требованиям", errorMessage, inputFieldError.getText());
 
     }
 
