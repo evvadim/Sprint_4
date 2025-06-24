@@ -9,22 +9,22 @@ public class OrderFieldError {
 
     // локаторы ошибок будем указывать через родителей локаторов полей ввода
     // вспомагательный локатор
-    private final By inputFieldError = By.xpath("./parent::div/div[contains(@class,'Input_ErrorMessage__3HvIb')]");
+    private static final By inputFieldError = By.xpath("./parent::div/div[contains(@class,'Input_ErrorMessage__3HvIb')]");
 
     // ошибка в вполе имя
-    private final By inputFirstNameFieldError = inputFieldError;
+    private static final By inputFirstNameFieldError = inputFieldError;
 
     // ошибка в поле фамилия
-    private final By inputLastNameFieldError = inputFieldError;
+    private static final By inputLastNameFieldError = inputFieldError;
 
     // ошибка в поле адрес
-    private final By inputAddressFieldError = inputFieldError;
+    private static final By inputAddressFieldError = inputFieldError;
 
     // ошибка в поле метро
-    private final By inputMetroError = By.xpath("./parent::div/div[@class='Order_MetroError__1BtZb']");
+    private static final By inputMetroFieldError = By.xpath("./parent::div/parent::div/parent::div/div[@class='Order_MetroError__1BtZb']");
 
     //ошибка в поле номер телефона
-    private final By inputPhoneNumberFieldError = inputFieldError;
+    private static final By inputPhoneNumberFieldError = inputFieldError;
 
     //объекты ошибок обязательных полей второго экрана формы заказа отсутствуют, кейс скипнут
 //    private final By inputDateFieldError
@@ -36,23 +36,23 @@ public class OrderFieldError {
     }
 
     // геттеры локаторов
-    public By getInputFirstNameFieldError() {
+    public static By getInputFirstNameFieldError() {
         return inputFirstNameFieldError;
     }
 
-    public By getInputLastNameFieldError() {
+    public static By getInputLastNameFieldError() {
         return inputLastNameFieldError;
     }
 
-    public By getInputAddressFieldError() {
+    public static By getInputAddressFieldError() {
         return inputAddressFieldError;
     }
 
-    public By getInputMetroError() {
-        return inputMetroError;
+    public static By getInputMetroFieldError() {
+        return inputMetroFieldError;
     }
 
-    public By getInputPhoneNumberFieldError() {
+    public static By getInputPhoneNumberFieldError() {
         return inputPhoneNumberFieldError;
     }
 }

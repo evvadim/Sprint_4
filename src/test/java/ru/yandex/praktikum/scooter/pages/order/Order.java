@@ -13,16 +13,16 @@ public class Order {
 
     // локаторы
     // поле имя
-     final By inputFirstNameField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Имя')]");
+     private static final By inputFirstNameField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Имя')]");
 
     // поле фамилия
-    final By inputLastNameField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Фамилия')]");
+    private static final By inputLastNameField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Фамилия')]");
 
     // поле адрес
-    final By inputAddressField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Адрес')]");
+    private static final By inputAddressField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Адрес')]");
 
     // элемент выбор станции метро
-    final By fieldMetro = By.className("select-search");
+    private static final By fieldMetro = By.className("select-search");
 
     // локатор для 1-го способа выбора станции
     // метод, возвращающий локатор элемента, текст которого совпадает с названием станции `station`
@@ -32,31 +32,31 @@ public class Order {
 
     // локаторы для 2-го способа выбора станции
     // поле ввода названия станции
-    final By inputMetro = By.xpath(".//input[@class='select-search__input']");
+    private static final By inputMetro = By.xpath(".//input[@class='select-search__input']");
 
     // первый элемент списка станций метро
-    final By firstElementOfList = By.xpath(".//li[1]");
+    private static final By firstElementOfList = By.xpath(".//li[1]");
 
     // поле телефон
-    final By inputPhoneNumberField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Телефон')]");
+    private static final By inputPhoneNumberField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Телефон')]");
 
     // кнопка Далее на первом экране формы (переход к следующему экрану)
-    final By buttonNextStepField = By.xpath(".//div[@class='Order_NextButton__1_rCA']/button[text()='Далее']");
+    private static final By buttonNextStepField = By.xpath(".//div[@class='Order_NextButton__1_rCA']/button[text()='Далее']");
 
     // поле даты
-    final By inputDateField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Когда')]");
+    private static final By inputDateField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Когда')]");
 
     // выбранная дата в календаре
-    final By selectedDate = By.className("react-datepicker__day--selected");
+    private static final By selectedDate = By.className("react-datepicker__day--selected");
 
     // поле срок аренды
-    final By rentalDurationField = By.className("Dropdown-root");
+    private static final By rentalDurationField = By.className("Dropdown-root");
 
     // элементы выпадающего списка срок аренды
-    final By rentalDurationElement = By.xpath(".//div[@class='Dropdown-menu']");
+    private static final By rentalDurationElement = By.xpath(".//div[@class='Dropdown-menu']");
 
     // цвет самоката
-    final By scooterColorCheckboxGroup = By.className("Order_Checkboxes__3lWSI");
+    private static final By scooterColorCheckboxGroup = By.className("Order_Checkboxes__3lWSI");
 
     // локатор чекбокса, содержащего `text`
     private By checkboxContainsText(String text) {
@@ -64,16 +64,16 @@ public class Order {
     }
 
     // комментарий курьеру
-    final By inputCommentField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Комментарий')]");
+    private static final By inputCommentField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Комментарий')]");
 
     // кнопка Заказать под формой ввода
-    final By orderButtonUnderForm = By.xpath(".//div[@Class='Order_Buttons__1xGrp']/button[text()='Заказать']");
+    private static final By orderButtonUnderForm = By.xpath(".//div[@Class='Order_Buttons__1xGrp']/button[text()='Заказать']");
 
     // копка Да подтверждения заказа
-    final By confirmOrderButton = By.xpath(".//button[contains(@class,'Button_Button__ra12g')][text()='Да']");
+    private static final By confirmOrderButton = By.xpath(".//button[contains(@class,'Button_Button__ra12g')][text()='Да']");
 
     // текст «Заказ оформлен» в случае удачного сценария заказа
-    final By orderConfirmationText = By.xpath(".//div[text()='Заказ оформлен']");
+    private static final By orderConfirmationText = By.xpath(".//div[text()='Заказ оформлен']");
 
 
     public Order(WebDriver driver) {
@@ -214,23 +214,23 @@ public class Order {
 
     //геттеры локаторов ввода
 
-    public By getInputFirstNameField() {
+    public static By getInputFirstNameField() {
         return inputFirstNameField;
     }
 
-    public By getInputLastNameField() {
+    public static By getInputLastNameField() {
         return inputLastNameField;
     }
 
-    public By getInputAddressField() {
+    public static By getInputAddressField() {
         return inputAddressField;
     }
 
-    public By getFieldMetro() {
-        return fieldMetro;
+    public static By getInputMetroField() {
+        return inputMetro;
     }
 
-    public By getInputPhoneNumberField() {
+    public static By getInputPhoneNumberField() {
         return inputPhoneNumberField;
     }
 
