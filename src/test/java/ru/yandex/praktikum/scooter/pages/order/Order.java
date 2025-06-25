@@ -69,11 +69,14 @@ public class Order {
     // кнопка Заказать под формой ввода
     private static final By orderButtonUnderForm = By.xpath(".//div[@Class='Order_Buttons__1xGrp']/button[text()='Заказать']");
 
-    // копка Да подтверждения заказа
+    // кнопка Да подтверждения заказа
     private static final By confirmOrderButton = By.xpath(".//button[contains(@class,'Button_Button__ra12g')][text()='Да']");
 
     // текст «Заказ оформлен» в случае удачного сценария заказа
-    private static final By orderConfirmationText = By.xpath(".//div[text()='Заказ оформлен']");
+    private static final By orderConfirmationHeader = By.xpath(".//div[text()='Заказ оформлен']");
+
+    // текст модального окна, из которого будем извлекать номер заказа
+    private static final By orderConfirmationText = By.xpath("./div[@class='Order_Text__2broi']");
 
 
     public Order(WebDriver driver) {
@@ -193,7 +196,7 @@ public class Order {
     }
 
     public boolean orderConfirmationTextDisplayed() {
-        List<WebElement> modal = driver.findElements(orderConfirmationText);
+        List<WebElement> modal = driver.findElements(orderConfirmationHeader);
         return !modal.isEmpty();
     }
 
@@ -212,8 +215,15 @@ public class Order {
         clickConfirmOrderButton();
     }
 
-    //геттеры локаторов ввода
+    public int getOrderNumber() {
+        WebElement confirmationTextElement = driver.findElement(orderConfirmationHeader).findElement(orderConfirmationText);
+        String orderNumberAsString = confirmationTextElement.getText();
+        orderNumberAsString = orderNumberAsString.substring(orderNumberAsString.indexOf(": ") + 2, orderNumberAsString.indexOf("."));
 
+        return Integer.parseInt(orderNumberAsString);
+    }
+
+    //геттеры локаторов ввода
     public static By getInputFirstNameField() {
         return inputFirstNameField;
     }
