@@ -8,7 +8,8 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import ru.yandex.praktikum.scooter.browser.BrowserDriverSetup;
+import ru.yandex.praktikum.scooter.browser.Browser;
+import ru.yandex.praktikum.scooter.browser.Chrome;
 import ru.yandex.praktikum.scooter.pages.order.Order;
 import ru.yandex.praktikum.scooter.pages.order.OrderFieldError;
 
@@ -22,16 +23,16 @@ public class TestErrorMessagesWhenFieldIsEmpty {
     private WebDriver driver;
 
     // готовим переменные для паратметризации
-    private final String runUsingDriver;
+    private final Browser browser;
     private final By inputFieldLocator;
     private final By inputFieldErrorLocator;
     private final String errorMessage;
 
-    public TestErrorMessagesWhenFieldIsEmpty(String runUsingDriver,
+    public TestErrorMessagesWhenFieldIsEmpty(Browser browser,
                                              By inputFieldLocator,
                                              By inputFieldErrorLocator,
                                              String errorMessage) {
-        this.runUsingDriver = runUsingDriver;
+        this.browser = browser;
         this.inputFieldLocator = inputFieldLocator;
         this.inputFieldErrorLocator = inputFieldErrorLocator;
         this.errorMessage = errorMessage;
@@ -41,20 +42,19 @@ public class TestErrorMessagesWhenFieldIsEmpty {
     @Parameterized.Parameters
     public static Object[][] getErrorMessages() {
         return new Object[][] {
-                {BrowserDriverSetup.CHROME, Order.getInputFirstNameField(), OrderFieldError.getInputFirstNameFieldError(), "Введите корректное имя"},
-                {BrowserDriverSetup.CHROME, Order.getInputLastNameField(), OrderFieldError.getInputLastNameFieldError(), "Введите корректную фамилию"},
-                {BrowserDriverSetup.CHROME, Order.getInputAddressField(), OrderFieldError.getInputAddressFieldError(), "Введите корректный адрес"},
-                {BrowserDriverSetup.CHROME, Order.getInputMetroField(), OrderFieldError.getInputMetroFieldError(), "Выберите станцию"},
-                {BrowserDriverSetup.CHROME, Order.getInputPhoneNumberField(), OrderFieldError.getInputPhoneNumberFieldError() , "Введите корректный номер"},
+                {new Chrome(), Order.getInputFirstNameField(), OrderFieldError.getInputFirstNameFieldError(), "Введите корректное имя"},
+                {new Chrome(), Order.getInputLastNameField(), OrderFieldError.getInputLastNameFieldError(), "Введите корректную фамилию"},
+                {new Chrome(), Order.getInputAddressField(), OrderFieldError.getInputAddressFieldError(), "Введите корректный адрес"},
+                {new Chrome(), Order.getInputMetroField(), OrderFieldError.getInputMetroFieldError(), "Выберите станцию"},
+                {new Chrome(), Order.getInputPhoneNumberField(), OrderFieldError.getInputPhoneNumberFieldError() , "Введите корректный номер"},
         };
     }
 
     @Before
     public void startUp() {
 
-        BrowserDriverSetup browserDriverSetup = new BrowserDriverSetup(runUsingDriver);
-        browserDriverSetup.driverManagerSetup();
-        driver = browserDriverSetup.getNewDriver();
+        browser.driverManagerSetup();
+        driver = browser.getNewDriver();
         assertNotNull(driver);
 
     }

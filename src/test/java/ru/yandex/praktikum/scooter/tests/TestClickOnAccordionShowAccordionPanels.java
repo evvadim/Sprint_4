@@ -6,7 +6,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
-import ru.yandex.praktikum.scooter.browser.BrowserDriverSetup;
+import ru.yandex.praktikum.scooter.browser.Browser;
+import ru.yandex.praktikum.scooter.browser.Chrome;
 import ru.yandex.praktikum.scooter.pages.main.SectionImportantQuestions;
 
 import static org.junit.Assert.*;
@@ -17,14 +18,14 @@ public class TestClickOnAccordionShowAccordionPanels {
     private WebDriver driver;
 
     // готовим переменные для параметризации
-    private final String runUsingDriver;
+    private final Browser browser;
     private final int index;
     private final String message;
 
-    public TestClickOnAccordionShowAccordionPanels(String runUsingDriver,
+    public TestClickOnAccordionShowAccordionPanels(Browser browser,
                                                    int index,
                                                    String message) {
-        this.runUsingDriver = runUsingDriver;
+        this.browser = browser;
         this.index = index;
         this.message = message;
     }
@@ -33,23 +34,22 @@ public class TestClickOnAccordionShowAccordionPanels {
     @Parameterized.Parameters
     public static Object[][] getMessages() {
         return new Object[][] {
-                {BrowserDriverSetup.CHROME, 1, "Сутки — 400 рублей. Оплата курьеру — наличными или картой."},
-                {BrowserDriverSetup.CHROME, 2, "Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим."},
-                {BrowserDriverSetup.CHROME, 3, "Допустим, вы оформляете заказ на 8 мая. Мы привозим самокат 8 мая в течение дня. Отсчёт времени аренды начинается с момента, когда вы оплатите заказ курьеру. Если мы привезли самокат 8 мая в 20:30, суточная аренда закончится 9 мая в 20:30."},
-                {BrowserDriverSetup.CHROME, 4, "Только начиная с завтрашнего дня. Но скоро станем расторопнее."},
-                {BrowserDriverSetup.CHROME, 5, "Пока что нет! Но если что-то срочное — всегда можно позвонить в поддержку по красивому номеру 1010."},
-                {BrowserDriverSetup.CHROME, 6, "Самокат приезжает к вам с полной зарядкой. Этого хватает на восемь суток — даже если будете кататься без передышек и во сне. Зарядка не понадобится."},
-                {BrowserDriverSetup.CHROME, 7, "Да, пока самокат не привезли. Штрафа не будет, объяснительной записки тоже не попросим. Все же свои."},
-                {BrowserDriverSetup.CHROME, 8, "Да, обязательно. Всем самокатов! И Москве, и Московской области."},
+                {new Chrome(), 1, "Сутки — 400 рублей. Оплата курьеру — наличными или картой."},
+                {new Chrome(), 2, "Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим."},
+                {new Chrome(), 3, "Допустим, вы оформляете заказ на 8 мая. Мы привозим самокат 8 мая в течение дня. Отсчёт времени аренды начинается с момента, когда вы оплатите заказ курьеру. Если мы привезли самокат 8 мая в 20:30, суточная аренда закончится 9 мая в 20:30."},
+                {new Chrome(), 4, "Только начиная с завтрашнего дня. Но скоро станем расторопнее."},
+                {new Chrome(), 5, "Пока что нет! Но если что-то срочное — всегда можно позвонить в поддержку по красивому номеру 1010."},
+                {new Chrome(), 6, "Самокат приезжает к вам с полной зарядкой. Этого хватает на восемь суток — даже если будете кататься без передышек и во сне. Зарядка не понадобится."},
+                {new Chrome(), 7, "Да, пока самокат не привезли. Штрафа не будет, объяснительной записки тоже не попросим. Все же свои."},
+                {new Chrome(), 8, "Да, обязательно. Всем самокатов! И Москве, и Московской области."},
         };
     }
 
     @Before
     public void startUp() {
 
-        BrowserDriverSetup browserDriverSetup = new BrowserDriverSetup(runUsingDriver);
-        browserDriverSetup.driverManagerSetup();
-        driver = browserDriverSetup.getNewDriver();
+        browser.driverManagerSetup();
+        driver = browser.getNewDriver();
         assertNotNull(driver);
 
     }

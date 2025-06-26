@@ -7,7 +7,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import ru.yandex.praktikum.scooter.browser.BrowserDriverSetup;
+import ru.yandex.praktikum.scooter.browser.Browser;
+import ru.yandex.praktikum.scooter.browser.Chrome;
+import ru.yandex.praktikum.scooter.browser.FireFox;
 import ru.yandex.praktikum.scooter.pages.order.Order;
 import ru.yandex.praktikum.scooter.pages.orderstatus.OrderStatus;
 
@@ -22,29 +24,28 @@ public class TestOrderNotFoundStatus {
     private int orderNumber;
 
     // готовим переменные для параметризации
-    private final String runUsingDriver;
+    private final Browser browser;
 
-    public TestOrderNotFoundStatus(String runUsingDriver, int orderNumber) {
-        this.runUsingDriver = runUsingDriver;
+    public TestOrderNotFoundStatus(Browser browser, int orderNumber) {
+        this.browser = browser;
         this.orderNumber = Math.max(orderNumber, 0);
     }
 
     @Parameterized.Parameters
     public static Object[][] getStatus() {
         return new Object[][] {
-                {BrowserDriverSetup.FIREFOX, 0},
-                {BrowserDriverSetup.CHROME, 15135},
-                {BrowserDriverSetup.CHROME, -2541},
-                {BrowserDriverSetup.CHROME, 0},
+                {new FireFox(), 0},
+                {new Chrome(), 15135},
+                {new Chrome(), -2541},
+                {new Chrome(), 0},
         };
     }
 
     @Before
     public void startUp() {
 
-        BrowserDriverSetup browserDriverSetup = new BrowserDriverSetup(runUsingDriver);
-        browserDriverSetup.driverManagerSetup();
-        driver = browserDriverSetup.getNewDriver();
+        browser.driverManagerSetup();
+        driver = browser.getNewDriver();
         assertNotNull(driver);
 
     }
@@ -60,7 +61,7 @@ public class TestOrderNotFoundStatus {
         // в противном случае будем использовать переданное значение (и надеяться, что не попадем
         // в существующий номер заказа)
 
-        if (runUsingDriver.equals(BrowserDriverSetup.FIREFOX)) {
+        if (browser instanceof FireFox) {
             driver.get("https://qa-scooter.praktikum-services.ru/order");
             Order order = new Order(driver);
             order.makeNewOrder(
@@ -81,7 +82,7 @@ public class TestOrderNotFoundStatus {
 
             orderNumber += 1;
 
-        } else if (runUsingDriver.equals(BrowserDriverSetup.CHROME)) {
+        } else if (browser instanceof Chrome) {
             if (orderNumber == 0) {
                 orderNumber = (int) (Math.random() * (Math.pow(10, 6) - 2) + 1);
             }

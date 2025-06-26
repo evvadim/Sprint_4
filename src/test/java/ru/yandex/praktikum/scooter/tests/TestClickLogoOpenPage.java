@@ -7,7 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ru.yandex.praktikum.scooter.browser.BrowserDriverSetup;
+import ru.yandex.praktikum.scooter.browser.Browser;
+import ru.yandex.praktikum.scooter.browser.Chrome;
 import ru.yandex.praktikum.scooter.pages.main.SectionLogoInHeader;
 
 import java.time.Duration;
@@ -17,14 +18,13 @@ import static org.junit.Assert.*;
 public class TestClickLogoOpenPage {
 
     private WebDriver driver;
-    private final String runUsingDriver = BrowserDriverSetup.CHROME;
+    private final Browser browser = new Chrome();
 
     @Before
     public void startUp() {
 
-        BrowserDriverSetup browserDriverSetup = new BrowserDriverSetup(runUsingDriver);
-        browserDriverSetup.driverManagerSetup();
-        driver = browserDriverSetup.getNewDriver();
+        browser.driverManagerSetup();
+        driver = browser.getNewDriver();
         assertNotNull(driver);
 
     }
