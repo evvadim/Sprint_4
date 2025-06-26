@@ -6,6 +6,7 @@ public class OrderFieldError {
 
 
     // локаторы ошибок будем указывать через родителей локаторов полей ввода
+
     // вспомагательный локатор
     private static final By inputFieldError = By.xpath("./parent::div/div[contains(@class,'Input_ErrorMessage__3HvIb')]");
 
@@ -25,6 +26,7 @@ public class OrderFieldError {
     private static final By inputPhoneNumberFieldError = inputFieldError;
 
     //объекты ошибок обязательных полей второго экрана формы заказа отсутствуют, кейс скипнут
+    // Как правильно отразить это в тестах?
 //    private final By inputDateFieldError
 //    private final By rentalDurationError
 

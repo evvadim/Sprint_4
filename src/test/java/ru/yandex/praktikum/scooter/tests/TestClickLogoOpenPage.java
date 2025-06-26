@@ -32,8 +32,7 @@ public class TestClickLogoOpenPage {
     @Test
     public void TestClickOnLogoScooter() {
 
-        // вспомогательный локатор: первая секция домашней страницы
-        By homePage = By.className("Home_FirstPart__3g6vG");
+
 
         driver.get("https://qa-scooter.praktikum-services.ru/order");
 
@@ -41,7 +40,7 @@ public class TestClickLogoOpenPage {
         sectionLogoInHeader.clickLogoScooter();
 
         // ожидаем загрузки главной страницы
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(homePage));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(sectionLogoInHeader.getHomePage()));
 
         assertEquals("Главная страница сервиса не открылась", "https://qa-scooter.praktikum-services.ru/", driver.getCurrentUrl());
 

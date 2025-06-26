@@ -19,7 +19,7 @@ public class MainPage {
     }
 
 
-    public void clickButtonOpenURL(WebElement button) {
+    public void clickButton(WebElement button) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", button);
         button.click();
     }

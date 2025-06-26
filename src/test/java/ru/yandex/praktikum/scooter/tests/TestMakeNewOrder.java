@@ -87,7 +87,7 @@ public class TestMakeNewOrder {
         String startURL = driver.getCurrentUrl();
 
         MainPage mainPage = new MainPage(driver);
-        mainPage.clickButtonOpenURL(mainPage.getOrderButtons().get(orderButtonNumber));
+        mainPage.clickButton(mainPage.getOrderButtons().get(orderButtonNumber));
         assertEquals("Адрес страницы с формой заказа отличается от требований",startURL+orderURLPath, driver.getCurrentUrl());
 
         Order order = new Order(driver);

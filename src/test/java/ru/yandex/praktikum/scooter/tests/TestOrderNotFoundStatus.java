@@ -34,7 +34,7 @@ public class TestOrderNotFoundStatus {
     @Parameterized.Parameters
     public static Object[][] getStatus() {
         return new Object[][] {
-                {new FireFox(), 0},
+//                {new FireFox(), 0}, // исключен т. к. в задании Хром, а мы значем, что в Хроме заказ не оформляется
                 {new Chrome(), 15135},
                 {new Chrome(), -2541},
                 {new Chrome(), 0},

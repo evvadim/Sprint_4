@@ -33,7 +33,6 @@ public class Order {
     // локаторы для 2-го способа выбора станции
     // поле ввода названия станции
     private static final By inputMetro = By.xpath(".//input[@class='select-search__input']");
-
     // первый элемент списка станций метро
     private static final By firstElementOfList = By.xpath(".//li[1]");
 
@@ -102,9 +101,10 @@ public class Order {
         WebElement field = driver.findElement(fieldMetro);
         field.click();
 
-        // ищем станцию в списке (в коде), скроллим список до неё и кликаем
+        // ищем станцию в списке, скроллим список до неё и кликаем
         WebElement station = field.findElement(elementStation(metroStation));
         station.click();
+
     }
 
     // 2-й способ: частичный ввод названия и клик в списке
@@ -117,7 +117,6 @@ public class Order {
 
         field.findElement(inputMetro).sendKeys(metroStation);
         field.findElement(firstElementOfList).click();
-
 
     }
 
