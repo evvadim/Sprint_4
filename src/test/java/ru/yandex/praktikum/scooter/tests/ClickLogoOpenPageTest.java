@@ -3,19 +3,20 @@ package ru.yandex.praktikum.scooter.tests;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.praktikum.scooter.browser.Browser;
 import ru.yandex.praktikum.scooter.browser.Chrome;
+import ru.yandex.praktikum.scooter.pages.external.dzen.MainPage;
 import ru.yandex.praktikum.scooter.pages.main.SectionLogoInHeader;
+import ru.yandex.praktikum.scooter.urls.UrlAddresses;
 
 import java.time.Duration;
 
 import static org.junit.Assert.*;
 
-public class TestClickLogoOpenPage {
+public class ClickLogoOpenPageTest {
 
     private WebDriver driver;
     private final Browser browser = new Chrome();
@@ -30,32 +31,26 @@ public class TestClickLogoOpenPage {
     }
 
     @Test
-    public void TestClickOnLogoScooter() {
+    public void testClickOnLogoScooter() {
 
 
-
-        driver.get("https://qa-scooter.praktikum-services.ru/order");
+        driver.get(UrlAddresses.SCOOTER_ORDER_PATH);
 
         SectionLogoInHeader sectionLogoInHeader = new SectionLogoInHeader(driver);
         sectionLogoInHeader.clickLogoScooter();
 
         // ожидаем загрузки главной страницы
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(sectionLogoInHeader.getHomePage()));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(sectionLogoInHeader.getHomePageSection()));
 
-        assertEquals("Главная страница сервиса не открылась", "https://qa-scooter.praktikum-services.ru/", driver.getCurrentUrl());
+        assertEquals("Главная страница сервиса не открылась", UrlAddresses.BASE_SCOOTER_URL + "/", driver.getCurrentUrl());
 
     }
 
     @Test
-    public void TestClickOnLogoYandex() {
+    public void testClickOnLogoYandex() {
 
-        // вспомогательный локатор: логотип на открывающейся странице
-        By dzenLogo = By.xpath(".//header[@id='dzen-header']");
-
-        driver.get("https://qa-scooter.praktikum-services.ru/order");
-
+        driver.get(UrlAddresses.SCOOTER_ORDER_PATH);
         String sourceHandler = driver.getWindowHandle();
-
         SectionLogoInHeader sectionLogoInHeader = new SectionLogoInHeader(driver);
         sectionLogoInHeader.clickLogoYandex();
 
@@ -68,9 +63,9 @@ public class TestClickLogoOpenPage {
         }
 
         // ожидаем загрузки страницы (появления логотипа дзена)
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(dzenLogo));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(MainPage.getDzenLogo()));
 
-        assertEquals("Главная страница Дзена не открылась", "https://dzen.ru/?yredirect=true", driver.getCurrentUrl());
+        assertEquals("Главная страница Дзена не открылась", UrlAddresses.DZEN_MAIN_PAGE, driver.getCurrentUrl());
 
     }
 

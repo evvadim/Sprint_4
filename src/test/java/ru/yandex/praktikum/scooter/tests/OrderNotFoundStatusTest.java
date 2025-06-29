@@ -12,13 +12,14 @@ import ru.yandex.praktikum.scooter.browser.Chrome;
 import ru.yandex.praktikum.scooter.browser.FireFox;
 import ru.yandex.praktikum.scooter.pages.order.Order;
 import ru.yandex.praktikum.scooter.pages.orderstatus.OrderStatus;
+import ru.yandex.praktikum.scooter.urls.UrlAddresses;
 
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
-public class TestOrderNotFoundStatus {
+public class OrderNotFoundStatusTest {
 
     private WebDriver driver;
     private int orderNumber;
@@ -26,12 +27,12 @@ public class TestOrderNotFoundStatus {
     // готовим переменные для параметризации
     private final Browser browser;
 
-    public TestOrderNotFoundStatus(Browser browser, int orderNumber) {
+    public OrderNotFoundStatusTest(Browser browser, int orderNumber) {
         this.browser = browser;
         this.orderNumber = Math.max(orderNumber, 0);
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters (name = "Тестовые данные {index}: проверяем номер заказа \"{1}\"")
     public static Object[][] getStatus() {
         return new Object[][] {
 //                {new FireFox(), 0}, // исключен т. к. в задании Хром, а мы значем, что в Хроме заказ не оформляется
@@ -62,7 +63,7 @@ public class TestOrderNotFoundStatus {
         // в существующий номер заказа)
 
         if (browser instanceof FireFox) {
-            driver.get("https://qa-scooter.praktikum-services.ru/order");
+            driver.get(UrlAddresses.SCOOTER_ORDER_PATH);
             Order order = new Order(driver);
             order.makeNewOrder(
                     "Вадим",
@@ -84,14 +85,14 @@ public class TestOrderNotFoundStatus {
 
         } else if (browser instanceof Chrome) {
             if (orderNumber == 0) {
+                System.out.printf("Переданный номер заказа '%d' не пренадлежит интервалу [1; 999_999], генерируем случайное число%n", orderNumber);
                 orderNumber = (int) (Math.random() * (Math.pow(10, 6) - 2) + 1);
             }
         }
 
 
-
-        String trackURL = String.format("https://qa-scooter.praktikum-services.ru/track?t=%d", orderNumber);
-        driver.get(trackURL);
+        String trackUrl = UrlAddresses.SCOOTER_TRACK_PATH + "?" + UrlAddresses.addParameters("t", Integer.toString(orderNumber));
+        driver.get(trackUrl);
 
         List<WebElement> element = driver.findElements(OrderStatus.getNotFoundMessage());
         assertFalse("Объект с текстом 'Заказ не существует' не найден", element.isEmpty());

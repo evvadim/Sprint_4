@@ -12,13 +12,14 @@ import ru.yandex.praktikum.scooter.browser.Browser;
 import ru.yandex.praktikum.scooter.browser.Chrome;
 import ru.yandex.praktikum.scooter.pages.order.Order;
 import ru.yandex.praktikum.scooter.pages.order.OrderFieldError;
+import ru.yandex.praktikum.scooter.urls.UrlAddresses;
 
 import java.util.Objects;
 
 import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
-public class TestErrorMessagesWhenFieldIsEmpty {
+public class ErrorMessagesWhenFieldIsEmptyTest {
 
     private WebDriver driver;
 
@@ -28,7 +29,7 @@ public class TestErrorMessagesWhenFieldIsEmpty {
     private final By inputFieldErrorLocator;
     private final String errorMessage;
 
-    public TestErrorMessagesWhenFieldIsEmpty(Browser browser,
+    public ErrorMessagesWhenFieldIsEmptyTest(Browser browser,
                                              By inputFieldLocator,
                                              By inputFieldErrorLocator,
                                              String errorMessage) {
@@ -39,7 +40,7 @@ public class TestErrorMessagesWhenFieldIsEmpty {
     }
 
     // данные для тестирования
-    @Parameterized.Parameters
+    @Parameterized.Parameters (name = "Тестовые данные {index}: ожидаем текст ошибки '{3}'")
     public static Object[][] getErrorMessages() {
         return new Object[][] {
                 {new Chrome(), Order.getInputFirstNameField(), OrderFieldError.getInputFirstNameFieldError(), "Введите корректное имя"},
@@ -62,7 +63,7 @@ public class TestErrorMessagesWhenFieldIsEmpty {
     @Test
     public void CheckErrorMessagesWhenFieldsEmpty() {
 
-        driver.get("https://qa-scooter.praktikum-services.ru/order");
+        driver.get(UrlAddresses.SCOOTER_ORDER_PATH);
         Order order = new Order(driver);
         order.clickNextButton();
 

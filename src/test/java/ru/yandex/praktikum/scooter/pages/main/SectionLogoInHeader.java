@@ -15,7 +15,7 @@ public class SectionLogoInHeader {
     private final By logoScooter = By.className("Header_LogoScooter__3lsAR");
 
     // вспомогательный локатор: первая секция домашней страницы
-    private final By homePage = By.className("Home_FirstPart__3g6vG");
+    private final By homePageSection = By.className("Home_FirstPart__3g6vG");
 
     public void clickLogoScooter() {
         driver.findElement(logoScooter).click();
@@ -25,8 +25,8 @@ public class SectionLogoInHeader {
         driver.findElement(logoYandex).click();
     }
 
-    public By getHomePage() {
-        return homePage;
+    public By getHomePageSection() {
+        return homePageSection;
     }
 
 }

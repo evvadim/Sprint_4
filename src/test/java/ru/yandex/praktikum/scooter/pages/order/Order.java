@@ -34,7 +34,7 @@ public class Order {
     // поле ввода названия станции
     private static final By inputMetro = By.xpath(".//input[@class='select-search__input']");
     // первый элемент списка станций метро
-    private static final By firstElementOfList = By.xpath(".//li[1]");
+    private static final By listOfMetroStation = By.xpath(".//li");
 
     // поле телефон
     private static final By inputPhoneNumberField = By.xpath(".//input[contains(@class,'Input_Input__1iN_Z')][contains(@placeholder,'Телефон')]");
@@ -52,7 +52,7 @@ public class Order {
     private static final By rentalDurationField = By.className("Dropdown-root");
 
     // элементы выпадающего списка срок аренды
-    private static final By rentalDurationElement = By.xpath(".//div[@class='Dropdown-menu']");
+    private static final By rentalDurationElement = By.xpath(".//div[@class='Dropdown-menu']/*");
 
     // цвет самоката
     private static final By scooterColorCheckboxGroup = By.className("Order_Checkboxes__3lWSI");
@@ -116,7 +116,7 @@ public class Order {
         WebElement field = driver.findElement(fieldMetro);
 
         field.findElement(inputMetro).sendKeys(metroStation);
-        field.findElement(firstElementOfList).click();
+        field.findElement(listOfMetroStation).click();
 
     }
 
@@ -165,8 +165,8 @@ public class Order {
         durationField.click();
 
         // кликаем по требуемому элементу списка
-        WebElement durationMenuItem = durationField.findElement(rentalDurationElement).findElement(By.xpath(String.format("./*[%d]", duration)));
-        durationMenuItem.click();
+        List<WebElement> durationMenuItem = durationField.findElements(rentalDurationElement);
+        durationMenuItem.get(duration).click();
 
     }
 
