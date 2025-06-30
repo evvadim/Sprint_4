@@ -6,7 +6,8 @@ import java.util.Properties;
 
 public class Config {
 
-    public static String browser;
+    private static final String browserName;
+    private static final String urlBase;
 
     static {
         Properties properties = new Properties();
@@ -15,7 +16,15 @@ public class Config {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        browser = properties.getProperty("browser", "chrome");
+        browserName = properties.getProperty("browser", "chrome");
+        urlBase = properties.getProperty("urlBase","");
     }
 
+
+    public static String getBrowserName() {
+        return browserName;
+    }
+    public static String getBaseUrl() {
+        return urlBase;
+    }
 }

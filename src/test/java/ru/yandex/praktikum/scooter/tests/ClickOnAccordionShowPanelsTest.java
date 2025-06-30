@@ -9,7 +9,7 @@ import org.openqa.selenium.WebDriver;
 import ru.yandex.praktikum.scooter.browser.Browser;
 import ru.yandex.praktikum.scooter.browser.BrowserFactory;
 import ru.yandex.praktikum.scooter.config.Config;
-import ru.yandex.praktikum.scooter.pages.main.SectionImportantQuestions;
+import ru.yandex.praktikum.scooter.pages.internal.main.SectionImportantQuestions;
 import ru.yandex.praktikum.scooter.urls.UrlAddresses;
 
 import static org.junit.Assert.*;
@@ -20,7 +20,7 @@ public class ClickOnAccordionShowPanelsTest {
     private WebDriver driver;
 
     // готовим переменные для параметризации
-    private final Browser browser = new BrowserFactory().makeBrowserNamed(Config.browser);
+    private final Browser browser = new BrowserFactory().makeBrowserNamed(Config.getBrowserName());
     private final int index;
     private final String question;
     private final String answer;
@@ -58,7 +58,7 @@ public class ClickOnAccordionShowPanelsTest {
     }
 
     @Test
-    public void TestClickOnAccordion() {
+    public void clickOnAccordionTest() {
 
         driver.get(UrlAddresses.BASE_SCOOTER_URL);
 

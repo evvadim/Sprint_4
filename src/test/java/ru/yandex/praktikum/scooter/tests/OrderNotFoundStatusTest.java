@@ -12,8 +12,8 @@ import ru.yandex.praktikum.scooter.browser.BrowserFactory;
 import ru.yandex.praktikum.scooter.browser.Chrome;
 import ru.yandex.praktikum.scooter.browser.FireFox;
 import ru.yandex.praktikum.scooter.config.Config;
-import ru.yandex.praktikum.scooter.pages.order.Order;
-import ru.yandex.praktikum.scooter.pages.orderstatus.OrderStatus;
+import ru.yandex.praktikum.scooter.pages.internal.order.Order;
+import ru.yandex.praktikum.scooter.pages.internal.orderstatus.OrderStatus;
 import ru.yandex.praktikum.scooter.urls.UrlAddresses;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class OrderNotFoundStatusTest {
     private int orderNumber;
 
     // готовим переменные для параметризации
-    private final Browser browser = new BrowserFactory().makeBrowserNamed(Config.browser);
+    private final Browser browser = new BrowserFactory().makeBrowserNamed(Config.getBrowserName());
 
     public OrderNotFoundStatusTest(int orderNumber) {
         this.orderNumber = Math.max(orderNumber, 0);
@@ -53,7 +53,7 @@ public class OrderNotFoundStatusTest {
     }
 
     @Test
-    public void TestOrderNotFoundIsVisible() {
+    public void orderNotFoundIsVisibleTest() {
 
         // создадим заказ, возьмем его номер `orderNumber`, увеличим его номер на единицу
         // и удостоверимся, что такого заказа не существует
@@ -86,13 +86,13 @@ public class OrderNotFoundStatusTest {
 
         } else if (browser instanceof Chrome) {
             if (orderNumber == 0) {
-                System.out.printf("Переданный номер заказа '%d' не пренадлежит интервалу [1; 999_999], генерируем случайное число%n", orderNumber);
+                System.out.printf("Переданный номер заказа не пренадлежит интервалу [1; 999_999], генерируем случайное число%n");
                 orderNumber = (int) (Math.random() * (Math.pow(10, 6) - 2) + 1);
             }
         }
 
 
-        String trackUrl = UrlAddresses.SCOOTER_TRACK_PATH + "?" + UrlAddresses.addParameters("t", Integer.toString(orderNumber));
+        String trackUrl = UrlAddresses.getTrackUrlWithParameters("t", Integer.toString(orderNumber));
         driver.get(trackUrl);
 
         List<WebElement> element = driver.findElements(OrderStatus.getNotFoundMessage());

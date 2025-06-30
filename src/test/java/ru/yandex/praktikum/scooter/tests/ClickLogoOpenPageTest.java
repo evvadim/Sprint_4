@@ -10,7 +10,7 @@ import ru.yandex.praktikum.scooter.browser.Browser;
 import ru.yandex.praktikum.scooter.browser.BrowserFactory;
 import ru.yandex.praktikum.scooter.config.Config;
 import ru.yandex.praktikum.scooter.pages.external.dzen.MainPage;
-import ru.yandex.praktikum.scooter.pages.main.SectionLogoInHeader;
+import ru.yandex.praktikum.scooter.pages.internal.main.SectionLogoInHeader;
 import ru.yandex.praktikum.scooter.urls.UrlAddresses;
 
 import java.time.Duration;
@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
 public class ClickLogoOpenPageTest {
 
     private WebDriver driver;
-    private final Browser browser = new BrowserFactory().makeBrowserNamed(Config.browser);
+    private final Browser browser = new BrowserFactory().makeBrowserNamed(Config.getBrowserName());
 
     @Before
     public void startUp() {
@@ -74,6 +74,5 @@ public class ClickLogoOpenPageTest {
     public void tearDown() {
         driver.quit();
     }
-
 
 }

@@ -1,4 +1,4 @@
-package ru.yandex.praktikum.scooter.pages.order;
+package ru.yandex.praktikum.scooter.pages.internal.order;
 
 import org.openqa.selenium.By;
 

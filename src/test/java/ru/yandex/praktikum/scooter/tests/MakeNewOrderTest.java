@@ -9,8 +9,8 @@ import org.openqa.selenium.WebDriver;
 import ru.yandex.praktikum.scooter.browser.Browser;
 import ru.yandex.praktikum.scooter.browser.BrowserFactory;
 import ru.yandex.praktikum.scooter.config.Config;
-import ru.yandex.praktikum.scooter.pages.main.MainPage;
-import ru.yandex.praktikum.scooter.pages.order.Order;
+import ru.yandex.praktikum.scooter.pages.internal.main.MainPage;
+import ru.yandex.praktikum.scooter.pages.internal.order.Order;
 import ru.yandex.praktikum.scooter.urls.UrlAddresses;
 
 import static org.junit.Assert.*;
@@ -21,7 +21,7 @@ public class MakeNewOrderTest {
     private WebDriver driver;
 
     // готовим переменные для параметризации
-    private final Browser browser = new BrowserFactory().makeBrowserNamed(Config.browser);
+    private final Browser browser = new BrowserFactory().makeBrowserNamed(Config.getBrowserName());
     private final int orderButtonNumber;
     private final String orderURLPath;
     private final String firstName;
@@ -80,7 +80,7 @@ public class MakeNewOrderTest {
     }
 
     @Test
-    public void MakeNewOrderFullFlow() {
+    public void makeNewOrderFullFlow() {
 
         driver.get(UrlAddresses.BASE_SCOOTER_URL);
 

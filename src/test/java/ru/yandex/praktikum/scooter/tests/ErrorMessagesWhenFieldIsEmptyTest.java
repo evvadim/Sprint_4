@@ -11,8 +11,8 @@ import org.openqa.selenium.WebElement;
 import ru.yandex.praktikum.scooter.browser.Browser;
 import ru.yandex.praktikum.scooter.browser.BrowserFactory;
 import ru.yandex.praktikum.scooter.config.Config;
-import ru.yandex.praktikum.scooter.pages.order.Order;
-import ru.yandex.praktikum.scooter.pages.order.OrderFieldError;
+import ru.yandex.praktikum.scooter.pages.internal.order.Order;
+import ru.yandex.praktikum.scooter.pages.internal.order.OrderFieldError;
 import ru.yandex.praktikum.scooter.urls.UrlAddresses;
 
 import java.util.Objects;
@@ -25,7 +25,7 @@ public class ErrorMessagesWhenFieldIsEmptyTest {
     private WebDriver driver;
 
     // готовим переменные для паратметризации
-    private final Browser browser = new BrowserFactory().makeBrowserNamed(Config.browser);
+    private final Browser browser = new BrowserFactory().makeBrowserNamed(Config.getBrowserName());
     private final By inputFieldLocator;
     private final By inputFieldErrorLocator;
     private final String errorMessage;
@@ -60,7 +60,7 @@ public class ErrorMessagesWhenFieldIsEmptyTest {
     }
 
     @Test
-    public void CheckErrorMessagesWhenFieldsEmpty() {
+    public void errorMessagesWhenFieldsEmptyTest() {
 
         driver.get(UrlAddresses.SCOOTER_ORDER_PATH);
         Order order = new Order(driver);
