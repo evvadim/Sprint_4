@@ -7,7 +7,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import ru.yandex.praktikum.scooter.browser.Browser;
-import ru.yandex.praktikum.scooter.browser.Chrome;
+import ru.yandex.praktikum.scooter.browser.BrowserFactory;
+import ru.yandex.praktikum.scooter.config.Config;
 import ru.yandex.praktikum.scooter.pages.main.MainPage;
 import ru.yandex.praktikum.scooter.pages.order.Order;
 import ru.yandex.praktikum.scooter.urls.UrlAddresses;
@@ -20,7 +21,7 @@ public class MakeNewOrderTest {
     private WebDriver driver;
 
     // готовим переменные для параметризации
-    private final Browser browser;
+    private final Browser browser = new BrowserFactory().makeBrowserNamed(Config.browser);
     private final int orderButtonNumber;
     private final String orderURLPath;
     private final String firstName;
@@ -34,8 +35,7 @@ public class MakeNewOrderTest {
     private final String comment;
 
 
-    public MakeNewOrderTest(Browser browser,
-                            int orderButtonNumber, // номер кнопки «заказать»
+    public MakeNewOrderTest(int orderButtonNumber, // номер кнопки «заказать»
                             String orderURLPath,
                             String firstName,
                             String lastName,
@@ -47,8 +47,6 @@ public class MakeNewOrderTest {
                             String color,
                             String comment) {
 
-        // не знаю насколько правильно было выбирать браузер для тестирования через отдельный класс с константами
-        this.browser = browser;
         this.orderButtonNumber = orderButtonNumber;
         this.orderURLPath = orderURLPath;
         this.firstName = firstName;
@@ -63,12 +61,12 @@ public class MakeNewOrderTest {
     }
 
     // данные для тестирования
-    @Parameterized.Parameters (name = "Тестовые данные {index}: номер кнопки 'Заказать': {1}; адрес страницы \"{2}\"; имя: \"{3}\"; фамилия: \"{4}\"; адрес: \"{5}\"; метро содержит: \"{6}\"; телефон: \"{7}\"; дата доставки: \"{8}\"; длительность (в сутках): {9}; цвет содержит: \"{10}\"; комментарий: \"{11}\"")
+    @Parameterized.Parameters (name = "Тестовые данные {index}: номер кнопки 'Заказать': {0}; адрес страницы \"{1}\"; имя: \"{2}\"; фамилия: \"{3}\"; адрес: \"{4}\"; метро содержит: \"{5}\"; телефон: \"{6}\"; дата доставки: \"{7}\"; длительность (в сутках): {8}; цвет содержит: \"{9}\"; комментарий: \"{10}\"")
     public static Object[][] getOrderData() {
         return new Object[][] {
-                {new Chrome(), 0, UrlAddresses.SCOOTER_ORDER_PATH, "Василий", "Самокатов", "Газетный пер., 17", "смол", "79876556789", "21.09.2024", 2, "серая", ""},
-                {new Chrome(), 1, UrlAddresses.SCOOTER_ORDER_PATH, "Ли", "Васильев", "Мытная ул., 31", "преобр", "79001116789", "1.09.2024", 2, "жемчуг", "очень надо"},
-                {new Chrome(), 0, UrlAddresses.SCOOTER_ORDER_PATH, "Джон", "Петров", "Историческая площадь, 1", "тага", "79001116789", "1.03.2025", 5, "чёрный", ""},
+                {0, UrlAddresses.SCOOTER_ORDER_PATH, "Василий", "Самокатов", "Газетный пер., 17", "смол", "79876556789", "21.09.2024", 2, "серая", ""},
+                {1, UrlAddresses.SCOOTER_ORDER_PATH, "Ли", "Васильев", "Мытная ул., 31", "преобр", "79001116789", "1.09.2024", 2, "жемчуг", "очень надо"},
+                {0, UrlAddresses.SCOOTER_ORDER_PATH, "Джон", "Петров", "Историческая площадь, 1", "тага", "79001116789", "1.03.2025", 5, "чёрный", ""},
         };
     }
 

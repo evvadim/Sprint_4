@@ -7,7 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.praktikum.scooter.browser.Browser;
-import ru.yandex.praktikum.scooter.browser.Chrome;
+import ru.yandex.praktikum.scooter.browser.BrowserFactory;
+import ru.yandex.praktikum.scooter.config.Config;
 import ru.yandex.praktikum.scooter.pages.external.dzen.MainPage;
 import ru.yandex.praktikum.scooter.pages.main.SectionLogoInHeader;
 import ru.yandex.praktikum.scooter.urls.UrlAddresses;
@@ -19,7 +20,7 @@ import static org.junit.Assert.*;
 public class ClickLogoOpenPageTest {
 
     private WebDriver driver;
-    private final Browser browser = new Chrome();
+    private final Browser browser = new BrowserFactory().makeBrowserNamed(Config.browser);
 
     @Before
     public void startUp() {

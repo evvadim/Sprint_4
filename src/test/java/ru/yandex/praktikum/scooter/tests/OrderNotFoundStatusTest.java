@@ -8,8 +8,10 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.yandex.praktikum.scooter.browser.Browser;
+import ru.yandex.praktikum.scooter.browser.BrowserFactory;
 import ru.yandex.praktikum.scooter.browser.Chrome;
 import ru.yandex.praktikum.scooter.browser.FireFox;
+import ru.yandex.praktikum.scooter.config.Config;
 import ru.yandex.praktikum.scooter.pages.order.Order;
 import ru.yandex.praktikum.scooter.pages.orderstatus.OrderStatus;
 import ru.yandex.praktikum.scooter.urls.UrlAddresses;
@@ -25,20 +27,19 @@ public class OrderNotFoundStatusTest {
     private int orderNumber;
 
     // готовим переменные для параметризации
-    private final Browser browser;
+    private final Browser browser = new BrowserFactory().makeBrowserNamed(Config.browser);
 
-    public OrderNotFoundStatusTest(Browser browser, int orderNumber) {
-        this.browser = browser;
+    public OrderNotFoundStatusTest(int orderNumber) {
         this.orderNumber = Math.max(orderNumber, 0);
     }
 
-    @Parameterized.Parameters (name = "Тестовые данные {index}: проверяем номер заказа \"{1}\"")
+    @Parameterized.Parameters (name = "Тестовые данные {index}: проверяем номер заказа \"{0}\"")
     public static Object[][] getStatus() {
         return new Object[][] {
 //                {new FireFox(), 0}, // исключен т. к. в задании Хром, а мы значем, что в Хроме заказ не оформляется
-                {new Chrome(), 15135},
-                {new Chrome(), -2541},
-                {new Chrome(), 0},
+                {15135},
+                {-2541},
+                {0},
         };
     }
 

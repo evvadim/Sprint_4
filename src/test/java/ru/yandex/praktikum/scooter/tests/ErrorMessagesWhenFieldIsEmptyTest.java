@@ -9,7 +9,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.yandex.praktikum.scooter.browser.Browser;
-import ru.yandex.praktikum.scooter.browser.Chrome;
+import ru.yandex.praktikum.scooter.browser.BrowserFactory;
+import ru.yandex.praktikum.scooter.config.Config;
 import ru.yandex.praktikum.scooter.pages.order.Order;
 import ru.yandex.praktikum.scooter.pages.order.OrderFieldError;
 import ru.yandex.praktikum.scooter.urls.UrlAddresses;
@@ -24,30 +25,28 @@ public class ErrorMessagesWhenFieldIsEmptyTest {
     private WebDriver driver;
 
     // готовим переменные для паратметризации
-    private final Browser browser;
+    private final Browser browser = new BrowserFactory().makeBrowserNamed(Config.browser);
     private final By inputFieldLocator;
     private final By inputFieldErrorLocator;
     private final String errorMessage;
 
-    public ErrorMessagesWhenFieldIsEmptyTest(Browser browser,
-                                             By inputFieldLocator,
+    public ErrorMessagesWhenFieldIsEmptyTest(By inputFieldLocator,
                                              By inputFieldErrorLocator,
                                              String errorMessage) {
-        this.browser = browser;
         this.inputFieldLocator = inputFieldLocator;
         this.inputFieldErrorLocator = inputFieldErrorLocator;
         this.errorMessage = errorMessage;
     }
 
     // данные для тестирования
-    @Parameterized.Parameters (name = "Тестовые данные {index}: ожидаем текст ошибки '{3}'")
+    @Parameterized.Parameters (name = "Тестовые данные {index}: ожидаем текст ошибки \"{2}\"")
     public static Object[][] getErrorMessages() {
         return new Object[][] {
-                {new Chrome(), Order.getInputFirstNameField(), OrderFieldError.getInputFirstNameFieldError(), "Введите корректное имя"},
-                {new Chrome(), Order.getInputLastNameField(), OrderFieldError.getInputLastNameFieldError(), "Введите корректную фамилию"},
-                {new Chrome(), Order.getInputAddressField(), OrderFieldError.getInputAddressFieldError(), "Введите корректный адрес"},
-                {new Chrome(), Order.getInputMetroField(), OrderFieldError.getInputMetroFieldError(), "Выберите станцию"},
-                {new Chrome(), Order.getInputPhoneNumberField(), OrderFieldError.getInputPhoneNumberFieldError() , "Введите корректный номер"},
+                {Order.getInputFirstNameField(), OrderFieldError.getInputFirstNameFieldError(), "Введите корректное имя"},
+                {Order.getInputLastNameField(), OrderFieldError.getInputLastNameFieldError(), "Введите корректную фамилию"},
+                {Order.getInputAddressField(), OrderFieldError.getInputAddressFieldError(), "Введите корректный адрес"},
+                {Order.getInputMetroField(), OrderFieldError.getInputMetroFieldError(), "Выберите станцию"},
+                {Order.getInputPhoneNumberField(), OrderFieldError.getInputPhoneNumberFieldError() , "Введите корректный номер"},
         };
     }
 
